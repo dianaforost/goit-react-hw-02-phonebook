@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import propTypes from 'prop-types';
+import css from './PhoneBook.module.css';
 export default class PhoneBook extends Component{
     constructor(){
         super();
@@ -22,9 +23,10 @@ export default class PhoneBook extends Component{
         };
     render(){
 
-    return <form onSubmit={this.handleSubmit}>
+    return <form onSubmit={this.handleSubmit} className={css.form}>
         <label htmlFor="name">Name</label>
     <input
+    className={css.inputName}
   type="text"
   name="name"
   onChange={this.handleChange}
@@ -35,6 +37,7 @@ export default class PhoneBook extends Component{
 />
 <label htmlFor="number">Number</label>
 <input
+className={css.inputNumber}
   type="tel"
   name="number"
   onChange={this.handleChange}
@@ -43,7 +46,7 @@ export default class PhoneBook extends Component{
   title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
   required
 />
-<button type="submit">Add contact</button>
+<button type="submit" className={css.btn}>Add contact</button>
     </form>
     }
 }

@@ -56,7 +56,16 @@ render() {
     contact.name.toLowerCase().includes(filter)
     );
     return (
-      <>
+      <div
+            style={{
+              height: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              padding:'10px 0px'
+            }}
+          >
       <Section title="Phonebook">
         <PhoneBook onSubmit={this.handleSubmit}/>
       </Section>
@@ -70,7 +79,7 @@ render() {
        <p>Your phonebook is empty.Please add a new contact.</p>
       )}
       </Section>
-      </>
+      </div>
       );
     }
   }
