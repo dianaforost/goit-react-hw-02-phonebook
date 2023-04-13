@@ -20,22 +20,34 @@ export class App extends Component{
 handleSubmit = (name, number) => {
   const newContact = {
     id: nanoid(),
-    name: name,
-    number: number,
+    name,
+    number,
   };
   const { contacts } = this.state;
-  this.setState(({contacts}) => ({contacts:[newContact, ...contacts]}));
-  if (contacts.map(e => e.name.toLowerCase()).includes(name.toLowerCase())) {
-    return alert(`${name} is already in contacts`);
+  if (
+    contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase(),
+    )
+  ) {
+    return alert(`${name} is already exist. Please enter another name!`);
+  } 
+  else if (contacts.find(contact => contact.number === number)) {
+    return alert(`${number} is already exist. Please enter another phone number!`);
+  } else {
+    this.setState(({ contacts }) => ({
+      contacts: [newContact, ...contacts],
+    }));
   }
-  // if(contacts.map(contact => contact.name.toLowerCase()).includes(name.toLowerCase())){
-  //   return alert(`${name} is already in contacts`)
-  // }
 };
 
 handleChange = evt => {
   this.setState({ filter: evt.currentTarget.value.toLowerCase() });
 };
+
+
+handleDeleteContact = contactId =>{
+  this.setState(prevState => ({contacts : prevState.contacts.filter(contact => contact.id !== contactId)}))
+}
 
 
 render() {
@@ -52,33 +64,13 @@ render() {
         {contacts.length > 1 && (
           <Filter value={filter} onChange={this.handleChange}/>
           )}
-          {contacts.length === 0}
-        <Contacts contacts={filteredContacts}/>
+          {contacts.length > 0 ? (
+        <Contacts contacts={filteredContacts} onDeleteContact={this.handleDeleteContact}/>
+      ) : (
+       <p>Your phonebook is empty.Please add a new contact.</p>
+      )}
       </Section>
       </>
       );
     }
   }
-  
-  
-  
-  // const form = e.currentTarget;
-  // // console.log(form);
-  // const name = form.elements.name.value;
-  // const id = nanoid();
-  // const number = form.elements.number.value;
-  // const newContact = {name, id, number};
-  
-  
-  
-  // const newContact = {
-    //   id: nanoid(),
-    //   name,
-    //   number,
-    // };
-    // e.preventDefault();
-    
-    
-    
-    // console.log(newContact);
-    // form.reset();
